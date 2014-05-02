@@ -172,3 +172,7 @@ UpgradeLog*.htm
 
 # Microsoft Fakes
 FakesAssemblies/
+
+# Dev Files
+jquery-2.0.0-vsdoc.js
+nppBackup
