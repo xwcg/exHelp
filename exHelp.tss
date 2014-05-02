@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<ArrayOfArrayOfArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ArrayOfArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\mschwarz\Documents\GitHub\exHelp\exHelp_Date.js</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\mschwarz\Documents\GitHub\exHelp\exHelp.js</string>
+    </ArrayOfString>
+  </ArrayOfArrayOfString>
+</ArrayOfArrayOfArrayOfString>
