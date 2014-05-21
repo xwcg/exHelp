@@ -490,6 +490,45 @@ SOFTWARE.
 
                         // By stringyfing the object to JSON and back we avoid pesky references
                         return exHelpObject.jsonParse(exHelpObject.jsonStringify(a));
+                    },
+
+                    sieve: function (e)
+                    {
+                        /// <summary>
+                        /// Cleans an array by removing empty values ("", null, undefined) and trimming all strings
+                        /// </summary>
+                        /// <param name="e" type="Array">Array to be cleaned</param>
+                        /// <returns type="Array">Cleaned array</returns>
+
+                        var temp = e;
+
+                        var fncSieve = function (a)
+                        {
+                            for (var key in a)
+                            {
+                                var value = a[key];
+                                if (exHelpObject.isString(value))
+                                {
+                                    a[key] = value = value.trim();
+                                    if (value.trim().length == 0)
+                                    {
+                                        a.splice(key, 1);
+                                        return fncSieve(a);
+                                    }
+                                }
+                                else
+                                {
+                                    if (value === null || value === undefined)
+                                    {
+                                        a.splice(key, 1);
+                                        return fncSieve(a);
+                                    }
+                                }
+                            }
+                            return a;
+                        };
+
+                        return fncSieve(temp);
                     }
                 },
             // Math helpers
