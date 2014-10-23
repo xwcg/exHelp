@@ -3,7 +3,7 @@
 
 /*!
 
-exHelp Library - Extensible Helper // Version 1.0.2.0
+exHelp Library - Extensible Helper // Version 1.0.2.1
 http://www.github.com/xwcg
 
 The MIT License (MIT)
@@ -50,7 +50,7 @@ SOFTWARE.
             info:
                 {
                     AppName: "Extensible Helper Class",
-                    Version: "1.0.0.0",
+                    Version: "1.0.2.1",
                     Author: "Michael Schwarz"
                 },
 
@@ -302,39 +302,63 @@ SOFTWARE.
                 $.extend(this, obj);
             },
 
+            json:
+            {
+                deserialize: function (str)
+                {
+                    /// <summary>
+                    /// Deserializes JSON (j) and fails gracefully on error
+                    /// </summary>
+                    /// <param name="str" type="String">JSON to parse</param>
+                    /// <returns type="mixed|null">JSON Parse result or null on error</returns>
+                    try
+                    {
+                        return JSON.parse(str);
+                    }
+                    catch (e)
+                    {
+                        console.error("JSON Parse Error ", e, "While Parsing: '", str, "'");
+                        return null;
+                    }
+                },
+                serialize: function (e)
+                {
+                    /// <summary>
+                    /// Serializes (e) to JSON and fails gracefully on error
+                    /// </summary>
+                    /// <param name="e" type="mixed">Value to stringify into JSON</param>
+                    /// <returns type="String|null">JSON String or null on error</returns>
+                    try
+                    {
+                        return JSON.stringify(e);
+                    }
+                    catch (e)
+                    {
+                        console.error("JSON Stringify Error ", e, "While Stringifying: ", e);
+                        return null;
+                    }
+                }
+
+            },
+            
+
             jsonParse: function (str)
             {
                 /// <summary>
-                /// Parses JSON (j) and fails gracefully on error
+                /// [Obsolete] Parses JSON (j) and fails gracefully on error
                 /// </summary>
                 /// <param name="str" type="String">JSON to parse</param>
                 /// <returns type="mixed|null">JSON Parse result or null on error</returns>
-                try
-                {
-                    return JSON.parse(str);
-                }
-                catch (e)
-                {
-                    console.error("JSON Parse Error ", e, "While Parsing: '", str, "'");
-                    return null;
-                }
+                return this.json.deserialize(str);
             },
             jsonStringify: function (e)
             {
                 /// <summary>
-                /// Stringifies (e) to JSON and fails gracefully on error
+                /// [Obsolete] Stringifies (e) to JSON and fails gracefully on error
                 /// </summary>
                 /// <param name="e" type="mixed">Value to stringify into JSON</param>
                 /// <returns type="String|null">JSON String or null on error</returns>
-                try
-                {
-                    return JSON.stringify(e);
-                }
-                catch (e)
-                {
-                    console.error("JSON Stringify Error ", e, "While Stringifying: ", e);
-                    return null;
-                }
+                return this.json.serialize(e);
             },
 
             // Helpers for randomization
@@ -982,7 +1006,7 @@ SOFTWARE.
                     // Returns true<bool> if browser is Microsoft Internet Explorer
                     get isMSIE()
                     {
-                        return $.browser.msie;
+                        return navigator.userAgent.toLowerCase().indexOf("trident") > -1;
                     },
 
                     // Returns true<bool> if browser is Microsoft IE Mobile
@@ -1276,20 +1300,22 @@ SOFTWARE.
             },
 
             locale:
+            {
+                _locale: "en-us",
+                set: function (l)
                 {
-                    _locale: "en-us",
-                    set: function (l)
-                    { this._locale = l; },
-                    getString: function (str)
-                    {
-                        var store = exHelpObject.storage("locale");
-                        if (store[this._locale] && store[this._locale][str])
-                            return store[this._locale][str];
+                    this._locale = l;
+                },
+                getString: function (str)
+                {
+                    var store = exHelpObject.storage("locale");
+                    if (store[this._locale] && store[this._locale][str])
+                        return store[this._locale][str];
                         
-                        return str;
-                    }
-
+                    return str;
                 }
+
+            }
         };
 
     /*
