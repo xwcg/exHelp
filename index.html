@@ -1,40 +1,31 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en-us">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta charset="UTF-8">
     <title>Exhelp by xwcg</title>
-
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>exHelp</h1>
-        <p>EXtendable HELPer Class/Object/Framework for Javascript</p>
+    <section class="page-header">
+      <h1 class="project-name">Exhelp</h1>
+      <h2 class="project-tagline">EXtendable HELPer Class/Object/Framework for Javascript</h2>
+      <a href="https://github.com/xwcg/exHelp" class="btn">View on GitHub</a>
+      <a href="https://github.com/xwcg/exHelp/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/xwcg/exHelp/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-        <p class="view"><a href="https://github.com/xwcg/exHelp">View the Project on GitHub <small>xwcg/exHelp</small></a></p>
+    <section class="main-content">
+      <h1>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Requirements</h1>
 
-
-        <ul>
-          <li><a href="https://github.com/xwcg/exHelp/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/xwcg/exHelp/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/xwcg/exHelp">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h1>
-<a name="requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>Requirements</h1>
-
-<p>You're gonna need a browser (exHelp might work in Node.js, but I cannot confirm nor deny it) and jQuery (any version 1.7+ should do). Having a text editor might be useful as well, or maybe you are just <strong>that</strong> fancy that you even use an IDE like VisualStudio, in which case I have great news: All functions have documentation comments, so autocompletion should work!</p>
+<p>You're gonna need a browser (exHelp might work in Node.js, but I cannot confirm that it does). Having a text editor might be useful as well, or maybe you are just <strong>that</strong> fancy that you even use an IDE like VisualStudio, in which case I have great news: All functions have documentation comments, so autocompletion should work!</p>
 
 <h1>
-<a name="setup" class="anchor" href="#setup"><span class="octicon octicon-link"></span></a>Setup</h1>
+<a id="setup" class="anchor" href="#setup" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Setup</h1>
 
 <p>Add the "exHelp.js" or "exHelp.min.js" to your document via script tags</p>
 
@@ -46,11 +37,11 @@
 <pre><code>&lt;script async src="/js/lib/exHelp.min.js" type="text/javascript"&gt;&lt;/script&gt;
 </code></pre>
 
-<p>If you want to make use of the Date Helper plugin, also load the "exHelp_Date[.min].js" file, it shouldn't matter where you load it, since it hooks asynchronously to exHelp, but just to be sure do it after the main file.</p>
+<p>If you want to make use of the Date Helper plugin, also load the "exHelp_Date[.min].js" file, it shouldn't matter where you load it, since it hooks asynchronously to exHelp, but just to be sure do it after the main file. Same goes for the DOM Plugin which can be found under the "exHelp_Element[.min].js" file.</p>
 
-<p>Now you should have the exHelp Prototype available and you can create a new exHelp instance by calling:</p>
+<p>Now you should have the exHelp available and you can create a shortcut to exHelp like so:</p>
 
-<pre><code>var app = new exHelp();
+<pre><code>var app = window.exHelp;
 </code></pre>
 
 <p>Now all exHelp functionality is accessible via the <code>app</code> object. For example:</p>
@@ -62,11 +53,9 @@ myStorage.password = app.random.string(6); // Get a random string of length 6
 </code></pre>
 
 <h1>
-<a name="extending" class="anchor" href="#extending"><span class="octicon octicon-link"></span></a>Extending</h1>
+<a id="extending" class="anchor" href="#extending" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Extending</h1>
 
-<p>You can also add your own functions to exHelp, either by extending the current instance or by extending all current and future instances.</p>
-
-<p>Assume we have got an object with a few functions:</p>
+<p>You can also add your own functions to exHelp. Assume we have got an object with a few functions:</p>
 
 <pre><code>var o = {
     times: function(num, multi)
@@ -76,14 +65,9 @@ myStorage.password = app.random.string(6); // Get a random string of length 6
 };
 </code></pre>
 
-<p>We can now add this function to our running instance <code>app</code>:</p>
+<p>We can now add this function to exHelp:</p>
 
 <pre><code>app.extend(o);
-</code></pre>
-
-<p>Or we can hook it on all running instances, as well as equip all future instances with it:</p>
-
-<pre><code>exHelpExtend(o);
 </code></pre>
 
 <p>and then you can simply call</p>
@@ -92,9 +76,9 @@ myStorage.password = app.random.string(6); // Get a random string of length 6
 </code></pre>
 
 <h1>
-<a name="best-practice" class="anchor" href="#best-practice"><span class="octicon octicon-link"></span></a>Best practice</h1>
+<a id="best-practice" class="anchor" href="#best-practice" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Best practice</h1>
 
-<p>In my opinion (or at least, this is how I do it) put all your functions inside your exHelp instance, this will make everything neat and organized, you can even add your own "subclasses" to keep everything categorized.</p>
+<p>In my opinion (or at least, this is how I do it) put all your functions inside exHelp, this will make everything neat and organized, you can even add your own "subclasses" to keep everything categorized.</p>
 
 <p>Some examples:</p>
 
@@ -111,7 +95,7 @@ myStorage.password = app.random.string(6); // Get a random string of length 6
         },
         myFnc3: function(e)
         {
-            // Or you can use your exHelp instance, if you have set it up as a global variable
+            // Or you can use your exHelp shortcut, if you have set it up as a global variable
             return app.custom.myFnc2(e) * e;
         }
     }
@@ -126,7 +110,7 @@ app.custom.myFnc2(4);
 app.custom.myFnc3(8);
 </code></pre>
 
-<p>Of course, this is a rudimentary way of setting up your exHelp instance. The graceful (and mobile friendly) way would be to load your "setup" code in a  self-executing function within a script file</p>
+<p>Of course, this is a rudimentary way of setting up your exHelp. The graceful (and mobile friendly) way would be to load your "setup" code in a  self-executing function within a script file</p>
 
 <pre><code>(function MyAppSetup(window)
 {
@@ -135,7 +119,7 @@ app.custom.myFnc3(8);
 
 <p>If you don't know, this creates the function <code>MyAppSetup</code> within the scope of the parenthesis and then executes it since we have a trailing () after the parenthesis that hold the function. We pass the window variable for consistency. All of this ensures that the function will be executed as soon as the javascript file is done loading as well as keeping all local variables enclosed within the scope of our "quasi-constructor".</p>
 
-<p>Best case you want the file to even load asynchronously (so it doesn't block rendering of the websites, e.g. on mobile devices), so we add this little tidbit at the top of out constructor:</p>
+<p>Best case you want the file to even load asynchronously (so it doesn't block rendering of the websites, e.g. on mobile devices), so we add this little tidbit at the top of our constructor after adding the <code>async</code> attribute on the script tag:</p>
 
 <pre><code>(function MyAppSetup(window)
 {
@@ -151,7 +135,7 @@ app.custom.myFnc3(8);
 <p>So now we have to different paths we can go, either you want to make an exHelp Plugin (Like exHelp Date Helper) or you want to actually develop your system with it, depending on which you want to do, we have to do slightly different things (but easy enough to remember) - but remember, the plugin way <em>always</em> works!</p>
 
 <h2>
-<a name="plugin" class="anchor" href="#plugin"><span class="octicon octicon-link"></span></a>Plugin</h2>
+<a id="plugin" class="anchor" href="#plugin" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Plugin</h2>
 
 <pre><code>(function MyPluginSetup(window)
 {
@@ -174,12 +158,12 @@ app.custom.myFnc3(8);
 })(window);
 </code></pre>
 
-<p>You create your object that holds all functions of your plugin, then extend the exHelp base object, so that all future instances will also contain this functionality - Don't worry about instances that you have already created, exHelp will extend those too!</p>
+<p>You create your object that holds all functions of your plugin, then extend the exHelp base object.</p>
 
 <p>Within a plugin, you either back-reference with the <code>this</code> keyword or if you need a function from a different scope of your plugin, you use the object name that you are initializing it with.</p>
 
 <h2>
-<a name="system" class="anchor" href="#system"><span class="octicon octicon-link"></span></a>System</h2>
+<a id="system" class="anchor" href="#system" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>System</h2>
 
 <pre><code>(function MyAppSetup(window)
 {
@@ -211,16 +195,16 @@ app.custom.myFnc3(8);
 })(window);
 </code></pre>
 
-<p>So you want to actually USE exHelp? Follow the design outlined above. You instantiate exHelp into a variable - optionally you can also extend your exHelp object with your own functions here (which you will want to do) and then extend them TO YOUR OBJECT (here <code>myapp</code>). Keep in mind that doing so will only affect the current exHelp instance, if you want all other instances to also inherit them you will have to use the plugin method describes above.</p>
+<p>So you want to actually USE exHelp? Follow the design outlined above. You expose exHelp into a variable - optionally you can also extend your exHelp object with your own functions here (which you will want to do) and then extend them.</p>
 
-<p>Finally, for convenience you can then expose your local variable <code>myapp</code> to the global scope <code>window</code>. I like to use one-letter names, since those are quick and easy to type and then swiftly enable you to program with ease. It also helps to get back into the exHelp scope from outside. Of course, for security reasons you might want to keep everything executing from within the scope and not expose it globally, but that is the beauty of this very lightweight system: It is all up to you, I only give you the rudimentary tools.</p>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/xwcg">xwcg</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/xwcg/exHelp">Exhelp</a> is maintained by <a href="https://github.com/xwcg">xwcg</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
       </footer>
-    </div>
-    <script src="javascripts/scale.fix.js"></script>
-    
+
+    </section>
+
+  
   </body>
 </html>
