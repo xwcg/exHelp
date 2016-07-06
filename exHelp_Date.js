@@ -340,7 +340,8 @@ SOFTWARE.
                     {
                         sqlString: function (str)
                         {
-                            try{
+                            try
+                            {
                                 var mainBits = str.split(" ");
                                 var dateBits = mainBits[0].split("-");
                                 var timeBits = mainBits[1].split(":");
@@ -444,7 +445,7 @@ SOFTWARE.
                             second: 0
                         };
 
-                    $.extend($steps, steps);
+                    exHelp.extend($steps, steps);
 
                     var $until = new exHelpDate.exDate(until);
 
@@ -452,7 +453,7 @@ SOFTWARE.
                     {
                         do
                         {
-                            if ($.isFunction(callback))
+                            if (exHelp.is.function(callback))
                                 callback.apply(this);
 
                             this.sub.year($steps.year)
@@ -468,7 +469,7 @@ SOFTWARE.
                     {
                         do
                         {
-                            if ($.isFunction(callback))
+                            if (exHelp.is.function(callback))
                                 callback.apply(this);
 
                             this.add.year($steps.year)
@@ -1436,7 +1437,7 @@ SOFTWARE.
                         phpString: function (d, format)
                         {
                             /// <summary>
-                            /// Formats the date using a PHP formatstring
+                            /// Formats the date using a PHP formatstring, REALLY UGLY AND BUGGY
                             /// </summary>
                             /// <param name="d" type="Date">The date to be formatted</param>
                             /// <param name="format" type="String">PHP format string (e.g.: "Y-m-d H:M:S")</param>
