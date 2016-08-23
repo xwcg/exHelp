@@ -1616,7 +1616,36 @@ THE SOFTWARE.
                         xhr.onreadystatechange = onReadyState;
 
                         xhr.open(baseOptions.method, url);
+
+                        if (baseOptions.data && baseOptions.method == "POST")
+                        {
+                            var datastring = "";
+
+                            // http://stackoverflow.com/questions/1714786/querystring-encoding-of-a-javascript-object
+                            var encode = function (obj, prefix)
+                            {
+                                var str = [];
+                                for (var p in obj)
+                                {
+                                    if (obj.hasOwnProperty(p))
+                                    {
+                                        var k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
+                                        str.push(typeof v == "object" ?
+                                          encode(v, k) :
+                                          encodeURIComponent(k) + "=" + encodeURIComponent(v));
+                                    }
+                                }
+                                return str.join("&");
+                            };
+
+                            datastring = encode(baseOptions.data);
+                            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                            xhr.send(datastring);
+                        }
+                        else
+                        {
                         xhr.send();
+                    }
                     }
                 },
 
