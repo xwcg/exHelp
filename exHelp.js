@@ -171,7 +171,7 @@ THE SOFTWARE.
                         var subscriber = scope[i];
 
                         // And execute it (window context)
-                        subscriber.call(window, e);
+                        subscriber.apply(window, e);
                     }
                 }
             },
