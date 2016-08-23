@@ -552,7 +552,7 @@ THE SOFTWARE.
                             for (var key in a)
                             {
                                 var value = a[key];
-                                if (exHelpObject.isString(value))
+                                if (exHelpObject.is.string(value))
                                 {
                                     a[key] = value = value.trim();
                                     if (value.trim().length == 0)
