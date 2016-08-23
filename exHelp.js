@@ -593,6 +593,14 @@ THE SOFTWARE.
                 {
                     rect: function (t, l, b, r)
                     {
+                        /// <summary>
+                        /// Return a rect helper object for a boundary
+                        /// </summary>
+                        /// <param name="t">Top border position</param>
+                        /// <param name="l">Left border position</param>
+                        /// <param name="b">Bottom border position</param>
+                        /// <param name="r">Right border position</param>
+                        /// <returns type="Object">Rect helper object</returns>
                         return {
                             top: t ? t : 0,
                             left: l ? l : 0,
@@ -608,6 +616,11 @@ THE SOFTWARE.
                             moveLeftTo: function (val) { var w = this.width; this.left = val, this.right = this.left + w; },
                             intersects: function (rect)
                             {
+                                /// <summary>
+                                /// Check whether this rect intersects with the given rect
+                                /// </summary>
+                                /// <param name="rect">Rect to check collision for</param>
+                                /// <returns type="Boolean">true if the given rect intersects</returns>
                                 return (this.left <= rect.right &&
                                       rect.left <= this.right &&
                                       this.top <= rect.bottom &&
@@ -615,6 +628,11 @@ THE SOFTWARE.
                             },
                             contains: function (rect)
                             {
+                                /// <summary>
+                                /// Check whether the given rect is entirely inside this rect
+                                /// </summary>
+                                /// <param name="rect">The rect to check</param>
+                                /// <returns type="Boolean">true if the given rect is entirely inside this rect</returns>
                                 return rect.left <= this.right && rect.left >= this.left &&
                                     rect.top <= this.bottom && rect.top >= this.top &&
                                     rect.right <= this.right && rect.right >= this.left &&
@@ -1655,6 +1673,9 @@ THE SOFTWARE.
                 {
                     nullOrEmpty: function (e)
                     {
+                        /// <summary>
+                        /// Returns true if the given value is null, undefined or an empty array or string
+                        /// </summary>
                         if (e === null || e === undefined)
                             return true;
 
@@ -1665,31 +1686,52 @@ THE SOFTWARE.
                     },
                     string: function (e)
                     {
+                        /// <summary>
+                        /// Returns true if the given value is a string
+                        /// </summary>
                         return !!(typeof e == "string" || e instanceof String);
                     },
                     "function": function (e)
                     {
+                        /// <summary>
+                        /// Returns true if the given value is a function
+                        /// </summary>
                         return !!(typeof e === "function" || e instanceof Function);
                     },
                     object: function (e)
                     {
+                        /// <summary>
+                        /// Returns true if the given value is an object
+                        /// </summary>
                         return !!(typeof e === "object" || e instanceof Object);
                     },
                     array: Array.isArray,
                     arraylike: function (e)
                     {
+                        /// <summary>
+                        /// Returns true if the given value has a length property
+                        /// </summary>
                         return e !== void 0 && e["length"] !== void 0;
                     },
                     number: function (e)
                     {
+                        /// <summary>
+                        /// Returns true if the given value is a finite number
+                        /// </summary>
                         return !isNaN(e) && isFinite(e) && e !== false && e !== true && e !== null && e !== undefined;
                     },
                     mouse_event: function (e)
                     {
+                        /// <summary>
+                        /// Returns true if the given event is a mouse event
+                        /// </summary>
                         return !!(typeof e === "MouseEvent" || e instanceof MouseEvent);
                     },
                     keyboard_event: function (e)
                     {
+                        /// <summary>
+                        /// Returns true if the given event is a keyboard event
+                        /// </summary>
                         return !!(typeof e === "KeyboardEvent" || e instanceof KeyboardEvent);
                     }
                 },

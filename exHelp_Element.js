@@ -190,6 +190,11 @@ THE SOFTWARE.
 
             setAttr: function (name, value)
             {
+                /// <summary>
+                /// Set an attribute
+                /// </summary>
+                /// <param name="name">The name of the attribute</param>
+                /// <param name="value">The value of the attribute</param>
                 this.each(function ()
                 {
                     if (this["setAttribute"] !== void 0)
@@ -199,6 +204,10 @@ THE SOFTWARE.
             },
             getAttr: function (name)
             {
+                /// <summary>
+                /// Get the value of an attribute
+                /// </summary>
+                /// <param name="name">The name of the attribute</param>
                 var ret = null;
                 this.each(function ()
                 {
@@ -209,6 +218,10 @@ THE SOFTWARE.
             },
             removeAttr: function (name)
             {
+                /// <summary>
+                /// Remove an attribute
+                /// </summary>
+                /// <param name="name">The name of the attribute</param>
                 this.each(function ()
                 {
                     if (this["removeAttribute"] !== void 0)
@@ -219,6 +232,10 @@ THE SOFTWARE.
 
             setHtml: function (value)
             {
+                /// <summary>
+                /// Set the inner HTML
+                /// </summary>
+                /// <param name="value">The HTML string</param>
                 this.each(function ()
                 {
                     if (this["innerHTML"] !== void 0)
@@ -236,6 +253,9 @@ THE SOFTWARE.
 
             getHtml: function ()
             {
+                /// <summary>
+                /// Get the inner HTML
+                /// </summary>
                 var ret = null;
                 this.each(function ()
                 {
@@ -253,11 +273,17 @@ THE SOFTWARE.
 
             empty: function ()
             {
+                /// <summary>
+                /// Set the inner HTML to an empty string
+                /// </summary>
                 return this.setHtml("");
             },
 
             remove: function ()
             {
+                /// <summary>
+                /// Remove the element(s) from their parent(s)
+                /// </summary>
                 this.each(function ()
                 {
                     this.parentNode.removeChild(this);
@@ -268,6 +294,9 @@ THE SOFTWARE.
 
             children: function ()
             {
+                /// <summary>
+                /// Get all children elements
+                /// </summary>
                 var ret = [];
                 this.each(function ()
                 {
@@ -280,6 +309,10 @@ THE SOFTWARE.
             },
             find: function (query)
             {
+                /// <summary>
+                /// Find child elements matching the given query string
+                /// </summary>
+                /// <param name="query">Query string to filter child elements by</param>
                 var ret = [], ele, isClass = query.charAt(0) == ".", isId = query.charAt(0) == "#", pureName = isClass || isId ? query.substr(1) : query, i, length;
 
                 this.each(function exElement_FindIterator()
@@ -306,6 +339,10 @@ THE SOFTWARE.
             },
             exclusive: function (query)
             {
+                /// <summary>
+                /// Reduce the selection by a given query string so that only elements matching the query remain
+                /// </summary>
+                /// <param name="query">Query string to filter by</param>
                 var ret = [], ele, isClass = query.charAt(0) == ".", isId = query.charAt(0) == "#", pureName = isClass || isId ? query.substr(1) : query, i, length;
 
                 this.each(function exElement_ExclusiveIterator()
@@ -322,6 +359,9 @@ THE SOFTWARE.
 
             getValue: function ()
             {
+                /// <summary>
+                /// Get the value(s) of the selection
+                /// </summary>
                 var values = [];
                 this.each(function ()
                 {
@@ -342,15 +382,27 @@ THE SOFTWARE.
 
             getWidth: function ()
             {
+                /// <summary>
+                /// Get the computed width
+                /// </summary>
+                /// <returns type="Number">Width</returns>
                 return parseFloat(this.getComputedStyle("width"));
             },
             getHeight: function ()
             {
+                /// <summary>
+                /// Get the computed height
+                /// </summary>
+                /// <returns type="Number">Height</returns>
                 return parseFloat(this.getComputedStyle("height"));
             },
 
             getParents: function (until)
             {
+                /// <summary>
+                /// Get a collection of all parent elements, optionally up to (but not including) the given parent
+                /// </summary>
+                /// <param name="until">(Optional) Query string to stop at</param>
                 var parents = [],
                     hasUntil = until !== undefined,
                     untilIsClass = hasUntil && until.startsWith("."),
@@ -388,6 +440,9 @@ THE SOFTWARE.
 
             getPageXY: function ()
             {
+                /// <summary>
+                /// Get the x/y offset relative to the page
+                /// </summary>
                 var fullscreenElement = document.fullScreenElement || document.msFullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
                 var offset = { x: 0, y: 0 };
                 var getOffset = function (e)
@@ -412,6 +467,10 @@ THE SOFTWARE.
 
             getPageBounds: function ()
             {
+                /// <summary>
+                /// Get the boundaries relative to the page
+                /// </summary>
+                /// <returns type="Object">TRBL object containing the bounds</returns>
                 var xy = this.getPageXY();
                 var bounds = {
                     left: xy.x,
@@ -426,6 +485,10 @@ THE SOFTWARE.
 
             getRelativeXY: function (until)
             {
+                /// <summary>
+                /// Get the x/y offset until the given parent element
+                /// </summary>
+                /// <param name="until">Query string of the parent to get relative offset for</param>
                 var offset = { x: 0, y: 0 },
                     isClass = until.charAt(0) == ".",
                     isId = until.charAt(0) == "#",
@@ -454,6 +517,11 @@ THE SOFTWARE.
 
             getRelativeBounds: function (until)
             {
+                /// <summary>
+                /// Get the boundaries relative to the given parent element
+                /// </summary>
+                /// <param name="until">Query string of the parent element to get the relative boundaries for</param>
+                /// <returns type="Object">TRBL object of the boundaries</returns>
                 var xy = this.getRelativeXY(until);
                 var bounds = {
                     left: xy.x,
@@ -467,6 +535,9 @@ THE SOFTWARE.
 
             getRelativeBoundingClientRect: function ()
             {
+                /// <summary>
+                /// Get the bounding client rect relative to the page
+                /// </summary>
                 var boundingRect = null;
                 var relBounds = this.getPageBounds();
                 this.each(function ()
@@ -493,6 +564,10 @@ THE SOFTWARE.
 
             getComputedStyle: function (prop)
             {
+                /// <summary>
+                /// Get the computed value of a given style
+                /// </summary>
+                /// <param name="prop">Style property to get the value for</param>
                 var ret = null;
 
                 this.each(function ()
@@ -516,6 +591,10 @@ THE SOFTWARE.
 
             addClass: function (value)
             {
+                /// <summary>
+                /// Add a class or classes to the elements in the selection
+                /// </summary>
+                /// <param name="value">Class name(s), space delimited</param>
                 var values = value.split(" ");
                 this.each(function ()
                 {
@@ -532,6 +611,10 @@ THE SOFTWARE.
 
             removeClass: function (value)
             {
+                /// <summary>
+                /// Remove a class or classes from the elements in the selection
+                /// </summary>
+                /// <param name="value">Class name(s), space delimited</param>
                 var values = value.split(" ");
                 this.each(function ()
                 {
@@ -548,6 +631,10 @@ THE SOFTWARE.
 
             toggleClass: function (value)
             {
+                /// <summary>
+                /// Toggle class(es) on elements on the selection
+                /// </summary>
+                /// <param name="value">Class name(s), space delimited</param>
                 var values = value.split(" ");
                 this.each(function ()
                 {
@@ -568,6 +655,10 @@ THE SOFTWARE.
 
             hasClass: function (value)
             {
+                /// <summary>
+                /// Get whether or not an element in the selection has the given class
+                /// </summary>
+                /// <param name="value">Class name to check for</param>
                 var ret = false;
                 this.each(function ()
                 {
@@ -583,6 +674,11 @@ THE SOFTWARE.
 
             setStyle: function (name, value)
             {
+                /// <summary>
+                /// Set a style property
+                /// </summary>
+                /// <param name="name">The name of the style property</param>
+                /// <param name="value">The value of the style property</param>
                 this.each(function ()
                 {
                     this.style[name] = value;
@@ -591,6 +687,10 @@ THE SOFTWARE.
 
             appendTo: function (target)
             {
+                /// <summary>
+                /// Append the elements in the selection to the given target element
+                /// </summary>
+                /// <param name="target">The target element to append the selection to, can be a query string, an HTMLElement or an exElement</param>
                 target = new exElement(target);
                 this.each(function ()
                 {
@@ -605,6 +705,10 @@ THE SOFTWARE.
 
             prependTo: function (target)
             {
+                /// <summary>
+                /// Prepend the elements in the selection to the given target element
+                /// </summary>
+                /// <param name="target">The target element to prepend the selection to, can be a query string, an HTMLElement or an exElement</param>
                 target = new exElement(target);
                 this.each(function ()
                 {
@@ -650,6 +754,11 @@ THE SOFTWARE.
 
             on: function (events, callback)
             {
+                /// <summary>
+                /// Attach an event handler to events
+                /// </summary>
+                /// <param name="events">The name(s) of the events to attach the handler to, space or comma delimited</param>
+                /// <param name="callback">The event handler</param>
                 var evts = [], $this = this;
                 if (exHelp.is.string(events))
                 {
@@ -827,6 +936,11 @@ THE SOFTWARE.
             },
             off: function (events, callback)
             {
+                /// <summary>
+                /// Detach an event handler from the given event(s)
+                /// </summary>
+                /// <param name="events">The name(s) of the events to detach the handler from, space or comma delimited</param>
+                /// <param name="callback">The event handler</param>
                 var evts = [], $this = this;
                 if (exHelp.is.string(events))
                 {
