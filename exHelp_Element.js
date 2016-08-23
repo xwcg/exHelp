@@ -158,7 +158,27 @@ THE SOFTWARE.
                     switch (key.toLowerCase())
                     {
                         case "html":
-                            this.setHtml(value);
+                            if (value.startsWith("__LOCALE__:"))
+                            {
+                                var localeKey = value.split(":")[1];
+                                this.setHtml(exHelp.locale.getString(localeKey));
+                            }
+                            else
+                                this.setHtml(value);
+                            break;
+
+                        case "class":
+                            this.addClass(value);
+                            break;
+
+                        case "width":
+                        case "height":
+                        case "top":
+                        case "left":
+                        case "right":
+                        case "bottom":
+                        case "position":
+                            this.setStyle(key, value);
                             break;
 
                         default:
