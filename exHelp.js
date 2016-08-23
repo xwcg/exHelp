@@ -1653,6 +1653,16 @@ THE SOFTWARE.
 
             is:
                 {
+                    nullOrEmpty: function (e)
+                    {
+                        if (e === null || e === undefined)
+                            return true;
+
+                        if (exHelp.is.arraylike(e) && e.length == 0)
+                            return true;
+
+                        return false;
+                    },
                     string: function (e)
                     {
                         return !!(typeof e == "string" || e instanceof String);
@@ -1672,7 +1682,15 @@ THE SOFTWARE.
                     },
                     number: function (e)
                     {
-                        return !isNaN(e) && isFinite(e);
+                        return !isNaN(e) && isFinite(e) && e !== false && e !== true && e !== null && e !== undefined;
+                    },
+                    mouse_event: function (e)
+                    {
+                        return !!(typeof e === "MouseEvent" || e instanceof MouseEvent);
+                    },
+                    keyboard_event: function (e)
+                    {
+                        return !!(typeof e === "KeyboardEvent" || e instanceof KeyboardEvent);
                     }
                 },
 
