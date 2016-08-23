@@ -209,6 +209,15 @@ THE SOFTWARE.
                 });
                 return ret;
             },
+            removeAttr: function (name)
+            {
+                this.each(function ()
+                {
+                    if (this["removeAttribute"] !== void 0)
+                        this.removeAttribute(name);
+                });
+                return this;
+            },
 
             setHtml: function (value)
             {
