@@ -282,12 +282,12 @@ THE SOFTWARE.
             },
             find: function (query)
             {
-                var ret = [], ele, isClass = query.charAt(0) == ".", isId = query.charAt(0) == "#", pureName = query.substr(1), i, length;
+                var ret = [], ele, isClass = query.charAt(0) == ".", isId = query.charAt(0) == "#", pureName = isClass || isId ? query.substr(1) : query, i, length;
 
                 this.each(function exElement_FindIterator()
                 {
                     ele = new exElement(this);
-                    if ((isClass && ele.hasClass(pureName)) || (isId && ele.getAttr("id") == pureName) || (!isClass && !isId && ele[0].nodeName.toLowerCase() == query.toLowerCase()))
+                    if ((isClass && ele.hasClass(pureName)) || (isId && ele.getAttr("id") == pureName) || (!isClass && !isId && ele[0].nodeName.toLowerCase() == pureName.toLowerCase()))
                     {
                         ret.push(this);
                     }
@@ -306,6 +306,42 @@ THE SOFTWARE.
 
                 return new exElement(ret);
             },
+            exclusive: function (query)
+            {
+                var ret = [], ele, isClass = query.charAt(0) == ".", isId = query.charAt(0) == "#", pureName = isClass || isId ? query.substr(1) : query, i, length;
+
+                this.each(function exElement_ExclusiveIterator()
+                {
+                    ele = new exElement(this);
+                    if ((isClass && ele.hasClass(pureName)) || (isId && ele.getAttr("id") == pureName) || (!isClass && !isId && ele[0].nodeName.toLowerCase() == pureName.toLowerCase()))
+                    {
+                        ret.push(this);
+                    }
+                });
+
+                return new exElement(ret);
+            },
+
+            getValue: function ()
+            {
+                var values = [];
+                this.each(function ()
+                {
+                    if (this.tagName == "INPUT" && this.type == "checkbox")
+                        values.push(this.checked);
+                    else if (this["value"] !== void 0)
+                        values.push(this.value);
+                });
+
+                values = exHelp.array.sieve(values);
+                if (values.length > 1)
+                    return values;
+                else if (values.length == 1)
+                    return values[0];
+                else
+                    return null;
+            },
+
             getWidth: function ()
             {
                 return parseFloat(this.getComputedStyle("width"));
@@ -315,11 +351,52 @@ THE SOFTWARE.
                 return parseFloat(this.getComputedStyle("height"));
             },
 
+            getParents: function (until)
+            {
+                var parents = [],
+                    hasUntil = until !== undefined,
+                    untilIsClass = hasUntil && until.startsWith("."),
+                    untilIsId = hasUntil && until.startsWith("#");
+
+                var gp = function (e)
+                {
+                    if (e)
+                    {
+                        var $e = new exElement(e);
+                        parents.push(e);
+                        if (hasUntil)
+                        {
+                            if ((untilIsClass && $e.hasClass(until)) || (untilIsId && $e.getAttr("id") == until))
+                                return false;
+                        }
+
+                        if (e.parentNode)
+                        {
+                            return gp(e.parentNode);
+                        }
+                    }
+                };
+
+                this.each(function ()
+                {
+                    if (this)
+                    {
+                        gp(this.parentNode);
+                    }
+                });
+
+                return new exElement(parents);
+            },
+
             getPageXY: function ()
             {
+                var fullscreenElement = document.fullScreenElement || document.msFullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
                 var offset = { x: 0, y: 0 };
                 var getOffset = function (e)
                 {
+                    if (exHelp.fullscreen.isFullscreen && fullscreenElement == e)
+                        return;
+
                     offset.x += e.offsetLeft;
                     offset.y += e.offsetTop;
 
@@ -346,6 +423,74 @@ THE SOFTWARE.
                 };
 
                 return bounds;
+            },
+
+
+            getRelativeXY: function (until)
+            {
+                var offset = { x: 0, y: 0 },
+                    isClass = until.charAt(0) == ".",
+                    isId = until.charAt(0) == "#",
+                    pureName = isClass || isId ? until.substr(1) : until;
+
+                var getOffset = function (e)
+                {
+                    var ele = new exElement(e);
+                    if ((isClass && ele.hasClass(pureName)) || (isId && ele.getAttr("id") == pureName) || (!isClass && !isId && ele[0].nodeName.toLowerCase() == pureName.toLowerCase()))
+                        return false;
+
+                    offset.x += e.offsetLeft;
+                    offset.y += e.offsetTop;
+
+                    if (e.offsetParent)
+                        getOffset(e.offsetParent);
+                };
+
+                this.each(function ()
+                {
+                    getOffset(this);
+                });
+
+                return offset;
+            },
+
+            getRelativeBounds: function (until)
+            {
+                var xy = this.getRelativeXY(until);
+                var bounds = {
+                    left: xy.x,
+                    top: xy.y,
+                    right: xy.x + this.getWidth(),
+                    bottom: xy.y + this.getHeight()
+                };
+
+                return bounds;
+            },
+
+            getRelativeBoundingClientRect: function ()
+            {
+                var boundingRect = null;
+                var relBounds = this.getPageBounds();
+                this.each(function ()
+                {
+                    boundingRect = this.getBoundingClientRect();
+                });
+
+                if (boundingRect != null)
+                {
+                    var outRect = {
+                        top: boundingRect.top - relBounds.top,
+                        left: boundingRect.left - relBounds.left,
+                        right: boundingRect.right - relBounds.right,
+                        bottom: boundingRect.bottom - relBounds.bottom,
+                        width: boundingRect.width,
+                        height: boundingRect.height
+                    };
+
+                    return outRect;
+                }
+
+                return relBounds;
             },
 
             getComputedStyle: function (prop)
@@ -428,7 +573,7 @@ THE SOFTWARE.
                 var ret = false;
                 this.each(function ()
                 {
-                    var classes = this.className.split(" ");
+                    var classes = this.className ? this.className.split(" ") : [];
                     if (exHelp.array.contains(classes, value))
                     {
                         ret = true;
