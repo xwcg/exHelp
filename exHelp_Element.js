@@ -1,8 +1,6 @@
-﻿/// <reference path="_references.js" />
+﻿/*!
 
-/*!
-
-exHelp Library - Element Helper Plugin // Version 1.0.0.0
+exHelp Library - Element Helper Plugin // Version 1.0.0.1
 http://www.github.com/xwcg
 
 The MIT License (MIT)
