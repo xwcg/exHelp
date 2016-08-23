@@ -1,6 +1,6 @@
 ﻿/*!
 
-exHelp Library - Extensible Helper // Version 1.1.0.0
+exHelp Library - Extensible Helper // Version 1.1.0.1
 http://www.github.com/xwcg
 
 The MIT License (MIT)
