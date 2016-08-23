@@ -591,6 +591,37 @@ THE SOFTWARE.
             // Math helpers
             math:
                 {
+                    rect: function (t, l, b, r)
+                    {
+                        return {
+                            top: t ? t : 0,
+                            left: l ? l : 0,
+                            right: r ? r : 0,
+                            bottom: b ? b : 0,
+                            get width() { return this.right - this.left; },
+                            get height() { return this.bottom - this.top; },
+                            set width(val) { this.right = this.left + val; },
+                            set height(val) { this.bottom = this.top + val; },
+                            moveTopBy: function (val) { this.top += val, this.bottom += val; },
+                            moveTopTo: function (val) { var h = this.height; this.top = val, this.bottom = this.top + h; },
+                            moveLeftBy: function (val) { this.left += val, this.right += val; },
+                            moveLeftTo: function (val) { var w = this.width; this.left = val, this.right = this.left + w; },
+                            intersects: function (rect)
+                            {
+                                return (this.left <= rect.right &&
+                                      rect.left <= this.right &&
+                                      this.top <= rect.bottom &&
+                                      rect.top <= this.bottom);
+                            },
+                            contains: function (rect)
+                            {
+                                return rect.left <= this.right && rect.left >= this.left &&
+                                    rect.top <= this.bottom && rect.top >= this.top &&
+                                    rect.right <= this.right && rect.right >= this.left &&
+                                    rect.bottom <= this.bottom && rect.bottom >= this.top;
+                            }
+                        };
+                    },
                     easing:
                         {
                             linearTween: function (t, b, c, d)
